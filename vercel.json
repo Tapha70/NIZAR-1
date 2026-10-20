@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "mobile",
+  "framework": null,
+  "installCommand": "echo skip",
+  "buildCommand": "echo skip"
+}
