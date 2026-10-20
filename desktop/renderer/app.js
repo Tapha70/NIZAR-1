@@ -5,7 +5,7 @@
 
 "use strict";
 
-const API_BASE = window.location.origin; // Se connecte au même backend
+const API_BASE = "https://nizar-1.onrender.com"; // Se connecte au même backend
 const electronAPI = window.electronAPI || {};
 
 let db = {

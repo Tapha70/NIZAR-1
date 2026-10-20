@@ -1,0 +1,12 @@
+{
+  "appId": "com.souleymane.app",
+  "appName": "Nizar Stock",
+  "webDir": ".",
+  "server": {
+    "url": "https://tapha-brown.vercel.app",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
