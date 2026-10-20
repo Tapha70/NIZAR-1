@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NTV Stock – Nizar Transport Voyageurs (Desktop)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Nizar Transport">
+  <div class="grow">
+    <h1 id="hdr-title">Nizar Transport Voyageurs</h1>
+    <small id="hdr-sub">Gestion de stock – Application Desktop Windows</small>
+  </div>
+  <div class="topbar-actions">
+    <button class="iconbtn" onclick="app.syncData()" title="Synchroniser avec le cloud">☁️</button>
+    <button class="iconbtn" onclick="app.exportExcel()" title="Exporter Excel">📊</button>
+    <button class="iconbtn" onclick="app.settingsForm()" title="Paramètres">⚙️</button>
+  </div>
+</header>
+
+<main class="desktop-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="NTV">
+      <div>NTV Stock</div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item on" data-view="home" onclick="app.go('home')"><i>🏠</i> Tableau de bord</button>
+      <button class="nav-item" data-view="articles" onclick="app.go('articles')"><i>📦</i> Articles</button>
+      <button class="nav-item" data-view="mouvements" onclick="app.go('mouvements')"><i>🔄</i> Mouvements</button>
+      <button class="nav-item" data-view="bons" onclick="app.go('bons')"><i>🧾</i> Bons de sortie</button>
+      <button class="nav-item" data-view="fiches" onclick="app.go('fiches')"><i>🖨️</i> Fiches de réception</button>
+      <button class="nav-item" data-view="settings" onclick="app.go('settings')"><i>⚙️</i> Paramètres</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sync-status" id="sync-status">● Connecté</div>
+      <div class="app-version">v2.0.0</div>
+    </div>
+  </aside>
+
+  <div class="content">
+    <!-- TABLEAU DE BORD -->
+    <section class="view active" id="view-home">
+      <div class="page-header">
+        <h1>Tableau de bord</h1>
+        <div class="page-actions">
+          <button class="btn navy" onclick="app.syncData()">☁️ Synchroniser</button>
+          <button class="btn sky" onclick="app.articleForm()">➕ Nouvel article</button>
+        </div>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="dashboard-grid">
+        <div class="card">
+          <h3>📦 Stock bas / ruptures</h3>
+          <div class="card-list" id="home-alerts"></div>
+        </div>
+        <div class="card">
+          <h3>🕘 Derniers mouvements</h3>
+          <div class="card-list" id="home-mvts"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICLES -->
+    <section class="view" id="view-articles">
+      <div class="page-header">
+        <h1>Articles</h1>
+        <div class="page-actions">
+          <button class="btn navy" onclick="app.articleForm()">➕ Nouvel article</button>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input id="art-search" type="search" placeholder="🔎 Rechercher un article…" oninput="app.renderArticles()">
+      </div>
+      <div class="chips" id="art-chips"></div>
+      <div class="table-wrap">
+        <table class="data-table" id="art-table">
+          <thead>
+            <tr><th>Code</th><th>Désignation</th><th>Catégorie</th><th>Stock</th><th>Seuil</th><th>Statut</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="art-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MOUVEMENTS -->
+    <section class="view" id="view-mouvements">
+      <div class="page-header">
+        <h1>Mouvements de stock</h1>
+        <div class="page-actions">
+          <button class="btn sky" onclick="app.syncData()">☁️ Synchroniser</button>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input id="mv-search" type="search" placeholder="🔎 Rechercher un mouvement…" oninput="app.renderMouvements()">
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="mv-table">
+          <thead>
+            <tr><th>Date</th><th>Type</th><th>Article</th><th>Code</th><th>Qté</th><th>Stock après</th><th>Agence</th><th>Opérateur</th></tr>
+          </thead>
+          <tbody id="mv-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BONS DE SORTIE -->
+    <section class="view" id="view-bons">
+      <div class="page-header">
+        <h1>Bons de sortie</h1>
+        <div class="page-actions">
+          <button class="btn navy" onclick="app.bonForm()">➕ Nouveau bon</button>
+        </div>
+      </div>
+      <div class="table-wrap" id="bons-list"></div>
+    </section>
+
+    <!-- FICHES DE RÉCEPTION -->
+    <section class="view" id="view-fiches">
+      <div class="page-header">
+        <h1>Fiches de réception</h1>
+        <div class="page-actions">
+          <button class="btn sky" onclick="app.fichesMenu()">🖨️ Générer une fiche</button>
+        </div>
+      </div>
+      <div class="table-wrap" id="fiches-list"></div>
+    </section>
+
+    <!-- PARAMÈTRES -->
+    <section class="view" id="view-settings">
+      <div class="page-header">
+        <h1>Paramètres</h1>
+      </div>
+      <div class="settings-panel">
+        <div class="card settings-card">
+          <h3>🏢 Société</h3>
+          <div class="field">
+            <label>Nom de la société</label>
+            <input id="set-societe" type="text" value="Nizar Transport Voyageurs">
+          </div>
+          <div class="field">
+            <label>Opérateur</label>
+            <input id="set-operateur" type="text" placeholder="Votre nom">
+          </div>
+          <div class="grid2">
+            <div class="field">
+              <label>Préfixe des codes</label>
+              <input id="set-prefixe" type="text" value="NTV" maxlength="6">
+            </div>
+            <div class="field">
+              <label>Devise</label>
+              <input id="set-devise" type="text" value="FCFA">
+            </div>
+          </div>
+          <button class="btn sky" onclick="app.saveSettingsDesktop()">💾 Enregistrer les paramètres</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- BOTTOM SHEET CONTAINER -->
+<div id="sheet-container"></div>
+
+<div id="print-area"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

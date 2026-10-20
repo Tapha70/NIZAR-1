@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3B9AD9">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>NTV Stock – Nizar Transport Voyageurs</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Nizar Transport">
+  <div class="grow">
+    <h1 id="hdr-title">Nizar Transport Voyageurs</h1>
+    <small id="hdr-sub">Gestion de stock</small>
+  </div>
+  <button class="iconbtn" onclick="app.syncData()" title="Synchroniser">☁️</button>
+</header>
+
+<main>
+  <!-- ACCUEIL -->
+  <section class="view active" id="view-home">
+    <div class="kpis" id="kpis"></div>
+    <div class="actions">
+      <button class="action primary" onclick="app.openScanner('consult')"><i>📷</i>Scanner</button>
+      <button class="action navy" onclick="app.bonForm()"><i>🧾</i>Bon sortie</button>
+      <button class="action amber" onclick="app.settingsForm()"><i>⚙️</i>Réglages</button>
+      <button class="action" onclick="app.articleForm()"><i>➕</i>Nouvel article</button>
+      <button class="action green" onclick="app.openScanner('inv')"><i>📋</i>Inventaire</button>
+      <button class="action sky" onclick="app.syncData()"><i>☁️</i>Synchro</button>
+    </div>
+    <h2>⚠️ Stock bas / ruptures</h2>
+    <div class="card list" id="home-alerts"></div>
+    <h2>🕘 Derniers mouvements</h2>
+    <div class="card list" id="home-mvts"></div>
+  </section>
+
+  <!-- ARTICLES -->
+  <section class="view" id="view-articles">
+    <div class="search">
+      <input id="art-search" type="search" placeholder="🔎 Rechercher (nom, code, emplacement)…" oninput="app.renderArticles()">
+      <button class="btn sky" onclick="app.articleForm()">＋ Nouvel article</button>
+    </div>
+    <div class="chips" id="art-chips"></div>
+    <div class="card list" id="art-list"></div>
+  </section>
+
+  <!-- MOUVEMENTS -->
+  <section class="view" id="view-mouvements">
+    <div class="search">
+      <input id="mv-search" type="search" placeholder="🔎 Article, agence, bénéficiaire…" oninput="app.renderMouvements()">
+    </div>
+    <div class="card list" id="mv-list"></div>
+  </section>
+</main>
+
+<nav class="nav">
+  <button data-v="home" class="on" onclick="app.go('home')"><i>🏠</i>Accueil</button>
+  <button data-v="articles" onclick="app.go('articles')"><i>📦</i>Articles</button>
+  <button class="scanbtn" onclick="app.openScanner('consult')"><i>📷</i></button>
+  <button data-v="mouvements" onclick="app.go('mouvements')"><i>🔄</i>Mouvements</button>
+</nav>
+
+<!-- SCANNER PLEIN ÉCRAN -->
+<div class="scanner hidden" id="scanner">
+  <video id="scan-video" playsinline muted autoplay></video>
+  <div class="scan-frame"><div class="scan-line"></div></div>
+  <div class="scan-top">
+    <button class="iconbtn" onclick="app.scannerClose()">✕</button>
+    <div class="grow" id="scan-title">Scanner un code-barres</div>
+  </div>
+  <div class="scan-bottom">
+    <div id="inv-box" class="hidden">
+      <div class="inv-list" id="inv-list"></div>
+      <button class="btn green block" onclick="app.finishInventory()">✔ Valider l'inventaire</button>
+    </div>
+    <div class="scan-manual">
+      <input id="scan-manual" placeholder="Ou saisir le code à la main" autocomplete="off" onkeydown="if(event.key==='Enter')Scanner.manual()">
+      <button onclick="Scanner.manual()">OK</button>
+    </div>
+  </div>
+</div>
+
+<div id="print-area"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxing/0.1.0/zxing.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

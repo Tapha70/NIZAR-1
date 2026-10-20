@@ -1,0 +1,13 @@
+{
+  "name": "nizar-stock-mobile",
+  "version": "2.0.0",
+  "description": "Application mobile PWA - Nizar Transport Voyageurs - Gestion de stock",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8080 -c-1",
+    "build": "echo 'PWA ready for deployment'"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "nizar-stock-desktop",
+  "productName": "NTV Stock",
+  "version": "2.0.0",
+  "description": "Application desktop Windows - Nizar Transport Voyageurs - Gestion de stock",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "build": "electron-builder"
+  },
+  "author": "Nizar Transport Voyageurs",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^25.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.nizartransport.stock",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
