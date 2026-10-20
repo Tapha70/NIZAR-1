@@ -7,7 +7,7 @@
 "use strict";
 
 // ==================== CONFIGURATION ====================
-const API_BASE = window.location.origin; // Même domaine (CORS configuré)
+const API_BASE = "https://nizar-1.onrender.com";
 const WS_URL = window.location.origin;
 const LS_KEY = 'ntv_stock_v2';
 const SYNC_PENDING_KEY = 'ntv_sync_pending';
