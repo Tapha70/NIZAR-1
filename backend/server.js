@@ -79,12 +79,12 @@ app.use((req, res, next) => {
 
 // Routes API
 app.use('/api/auth', authRoutes);
-app.use('/api/articles', authenticateToken, articleRoutes);
-app.use('/api/mouvements', authenticateToken, mouvementRoutes);
-app.use('/api/bons', authenticateToken, bonRoutes);
-app.use('/api/fiches', authenticateToken, ficheRoutes);
-app.use('/api/settings', authenticateToken, settingsRoutes);
-app.use('/api/sync', authenticateToken, syncRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/mouvements', mouvementRoutes);
+app.use('/api/bons', bonRoutes);
+app.use('/api/fiches', ficheRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/sync', syncRoutes);
 
 // Route de santé
 app.get('/api/health', (req, res) => {
